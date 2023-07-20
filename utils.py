@@ -15,6 +15,29 @@ import os
 import re
 import torch
 
+def Draw_Classification_Map(label, name: str, scale: float = 3, dpi: int = 400):
+    '''
+    get classification map , then save to given path
+    :param label: classification label, 2D
+    :param name: saving path and file's name
+    :param scale: scale of image. If equals to 1, then saving-size is just the label-size
+    :param dpi: default is OK
+    :return: null
+    '''
+    fig, ax = plt.subplots()
+    plt.imshow(label)
+    # numlabel = np.array(label)
+    # v = spy.imshow(classes=numlabel.astype(np.int16), fignum=fig.number)
+    ax.set_axis_off()
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+    fig.set_size_inches(label.shape[1] * scale / dpi, label.shape[0] * scale / dpi)
+    foo_fig = plt.gcf()  # 'get current figure'
+    plt.gca().xaxis.set_major_locator(plt.NullLocator())
+    plt.gca().yaxis.set_major_locator(plt.NullLocator())
+    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+    foo_fig.savefig(name + '.png', format='png', transparent=True, dpi=dpi, pad_inches=0)
+    
 def get_device(ordinal):
     # Use GPU ?
     if ordinal < 0:
