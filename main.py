@@ -187,13 +187,15 @@ for run in range(N_RUNS):
         print("test time: ", toc-tic)
         te_time.append(toc-tic)
         prediction = prediction.reshape(img.shape[:2])
-   
+        Draw_Classification_Map(prediction,"{}_SVM_grid".format(DATASET))
+        
     elif MODEL == "SVM":
         X_train, y_train = build_dataset(img, train_gt, ignored_labels=IGNORED_LABELS)
         clf = sklearn.svm.SVC()
         clf.fit(X_train, y_train)
         prediction = clf.predict(img.reshape(-1, N_BANDS))
         prediction = prediction.reshape(img.shape[:2])
+        Draw_Classification_Map(prediction,"{}_SVM".format(DATASET))
     
     run_results, AA = metrics(
         prediction,
